@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerated Co-Design of Robots Through Morphological Pretraining</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ========== CUSTOMIZATION VARIABLES ========== */
+        :root {
+            /* Warmer, friendlier color palette */
+            --primary-color: #1a202c;
+            --accent-color: #2d3748;
+            --link-color: #0FA3B1;
+            --robot-teal: #0FA3B1;
+            --robot-cyan: #00b4d8;
+            --warm-orange: #F2994A;
+            --accent-green: #95C623;
+            --text-dark: #000000;
+            --text-medium: #000000;
+            --text-light: #1a1a1a;
+            --bg-white: #ffffff;
+            --bg-warm: #f9fafb;
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e0;
+            
+            /* Spacing */
+            --content-width: 1000px;
+            --section-spacing: 3rem;
+            
+            /* Typography - matching lukestrgar.com */
+            --font-serif: 'Lora', 'Charter', 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+            --font-sans: 'Helvetica Neue', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        /* ========== BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-serif);
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--bg-white);
+        }
+        
+        /* ========== HEADER SECTION ========== */
+        header {
+            background: var(--bg-white);
+            padding: 3.5rem 2rem 3rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .header-content {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+        
+        .highlight-teal {
+            color: var(--robot-teal);
+        }
+        
+        .highlight-yellow {
+            color: var(--warm-orange);
+        }
+        
+        .highlight-green {
+            color: var(--accent-green);
+        }
+        
+        .mobile-only {
+            display: none;
+        }
+        
+        .desktop-br {
+            display: inline;
+        }
+        
+        .desktop-only {
+            display: inline;
+        }
+        
+        .venue {
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+        
+        .venue em {
+            font-style: italic;
+        }
+        
+        .authors {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            margin-bottom: 0.35rem;
+            font-weight: 400;
+        }
+        
+        .affiliation {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.75rem;
+            font-weight: 400;
+        }
+        
+        .paper-links {
+            margin-top: 1.75rem;
+            display: flex;
+            gap: 0.625rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            font-family: var(--font-sans);
+            padding: 0.5rem 1.125rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+            font-size: 1.05rem;
+            font-weight: 400;
+            border-radius: 3px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+        
+        @media (hover: hover) {
+            .btn-primary:hover {
+                background: var(--robot-teal);
+                border-color: var(--robot-teal);
+            }
+        }
+        
+        .btn-primary:active {
+            background: var(--robot-teal);
+            border-color: var(--robot-teal);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-medium);
+            border: 1px solid var(--border-medium);
+        }
+        
+        @media (hover: hover) {
+            .btn-secondary:hover {
+                color: var(--warm-orange);
+                border-color: var(--warm-orange);
+            }
+        }
+        
+        .btn-secondary:active {
+            color: var(--warm-orange);
+            border-color: var(--warm-orange);
+        }
+        
+        /* ========== TEASER IMAGE ========== */
+        .teaser-image {
+            max-width: var(--content-width);
+            margin: 1.5rem auto 0;
+            padding: 0 2rem 0;
+        }
+        
+        .teaser-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+            background: var(--bg-warm);
+        }
+        
+        /* ========== MAIN CONTENT ========== */
+        main {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+        
+        section {
+            padding: var(--section-spacing) 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 1.125rem;
+            letter-spacing: -0.005em;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--robot-teal);
+            display: inline-block;
+        }
+        
+        .section-content {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-medium);
+        }
+        
+        .section-content a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .section-content a:hover {
+            color: var(--robot-cyan);
+        }
+        
+        /* ========== ABSTRACT ========== */
+        .abstract-text {
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        /* ========== VIDEO SECTION ========== */
+        .video-container {
+            margin-top: 1.5rem;
+        }
+        
+        .video-item {
+            margin-bottom: 2.25rem;
+        }
+        
+        .video-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .video-wrapper {
+            background: var(--bg-warm);
+            border: 1px solid var(--border-light);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-wrapper video,
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .video-placeholder {
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .video-caption {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* ========== CITATION ========== */
+        .citation-box {
+            background: var(--bg-warm);
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            color: var(--text-medium);
+            border: 1px solid var(--border-medium);
+            border-radius: 3px;
+            padding: 0.35rem 0.8rem;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        @media (hover: hover) {
+            .copy-btn:hover {
+                color: var(--warm-orange);
+                border-color: var(--warm-orange);
+            }
+        }
+        
+        .copy-btn:active {
+            color: var(--warm-orange);
+            border-color: var(--warm-orange);
+        }
+        
+        .bibtex-code {
+            color: var(--text-dark);
+            white-space: pre;
+            padding-right: 5rem;
+        }
+        
+        /* ========== FOOTER ========== */
+        footer {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        footer a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+        
+        footer a:hover {
+            border-bottom-color: var(--link-color);
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            :root {
+                --section-spacing: 2.5rem;
+            }
+            
+            header {
+                padding: 2.5rem 1.5rem 2.25rem;
+            }
+            
+            h1 {
+                font-size: 1.875rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-only {
+                display: inline;
+            }
+            
+            .desktop-br {
+                display: none;
+            }
+            
+            .desktop-only {
+                display: none;
+            }
+            
+            .venue {
+                font-size: 0.95rem;
+                margin-bottom: 1.25rem;
+            }
+            
+            .authors,
+            .affiliation {
+                font-size: 1rem;
+            }
+            
+            .paper-links {
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                font-size: 0.975rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            main {
+                padding: 0 1.5rem 2.5rem;
+            }
+            
+            section {
+                padding: var(--section-spacing) 0;
+            }
+            
+            h2 {
+                font-size: 1.35rem;
+                margin-bottom: 1rem;
+            }
+            
+            .section-content {
+                font-size: 1rem;
+            }
+            
+            .abstract-text {
+                text-align: left;
+            }
+            
+            .video-caption {
+                font-size: 0.9rem;
+            }
+            
+            .citation-box {
+                padding: 1.25rem;
+                font-size: 0.75rem;
+            }
+            
+            .copy-btn {
+                position: static;
+                display: block;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            
+            .bibtex-code {
+                padding-right: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.625rem;
+            }
+            
+            .venue {
+                font-size: 0.9rem;
+            }
+            
+            .authors,
+            .affiliation {
+                font-size: 0.95rem;
+            }
+            
+            header {
+                padding: 2rem 1.25rem 2rem;
+            }
+            
+            main {
+                padding: 0 1.25rem 2rem;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            .section-content {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1><span class="desktop-only">Accelerated Co-Design of <span class="highlight-teal">Robots</span><br>Through <span class="highlight-yellow">Morphological</span> Pretraining</span><span class="mobile-only">Accelerated Co-Design<br>of <span class="highlight-teal">Robots</span> Through<br><span class="highlight-yellow">Morphological</span> Pretraining</span></h1>
+            <p class="venue"><em>Proceedings of the International Conference on Learning Representations (ICLR)</em>, 2026</p>
+            <p class="authors">Luke Strgar & Sam Kriegman</p>
+            <p class="affiliation">Northwestern University</p>
+            <div class="paper-links">
+                <a href="https://openreview.net/forum?id=WVliGyFwZv" class="btn btn-secondary" target="_blank">Paper</a>
+                <a href="#" class="btn btn-secondary">Code</a>
+                <a href="#citation" class="btn btn-secondary">Citation</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Teaser Image -->
+    <div class="teaser-image">
+        <img src="assets/RobotTeaser.jpg" alt="Robot Design Teaser">
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Abstract -->
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <div class="section-content abstract-text">
+                The co-design of robot morphology and neural control typically requires using reinforcement learning to approximate a unique control policy gradient for each body plan, demanding massive amounts of training data to measure the performance of each design. Here we show that a universal, morphology-agnostic controller can be rapidly and directly obtained by gradient-based optimization through differentiable simulation. This process of morphological pretraining allows the designer to explore non-differentiable changes to a robot's physical layout (e.g. adding, removing and recombining discrete body parts) and immediately determine which revisions are beneficial and which are deleterious using the pretrained model. We term this process "zero-shot evolution" and compare it with the simultaneous co-optimization of a universal controller alongside an evolving design population. We find the latter results in diversity collapse, a previously unknown pathology whereby the population—and thus the controller's training data—converges to similar designs that are easier to steer with a shared universal controller. We show that zero-shot evolution with a pretrained controller quickly yields a diversity of highly performant designs, and by fine-tuning the pretrained controller on the current population throughout evolution, diversity is not only preserved but significantly increased as superior performance is achieved.            </div>
+        </section>
+
+        <!-- Results: Before/After -->
+        <section id="results-learning">
+            <h2>Before and After Learning</h2>
+            <div class="section-content">
+                <p style="margin-bottom: 1.5rem;">Four randomly generated designs performing phototaxis before and after training the universal controller. In the first seven seconds the robots are stationary, unable to move with a randomly initialized controller. After having been empowered with the universal controller, the robots effectively sense and locomote towards the randomly positioned light source.</p>
+                <div class="video-container">
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Before&AfterLearning.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results: Adaptive Phototaxis -->
+        <section id="results-adaptive">
+            <h2>Adaptive Phototaxis</h2>
+            <div class="section-content">
+                <p style="margin-bottom: 1.5rem;">
+                    These are some of the designs that evolved. In each video, one design is shown in four randomly generated test environments. All of these designs, along with millions of others not shown, use the same universal controller to perform adaptive phototaxis. This morphology agnostic controller was pretrained using analytical gradients from differentiable simulation in minutes and then used as a prior for zero-shot and few-shot morphological evolution.
+                </p>
+                <div class="video-container">
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Robot1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Robot2.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Robot3.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <!-- <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Robot4.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-wrapper">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="assets/Robot5.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Citation -->
+        <section id="citation">
+            <h2>Citation</h2>
+            <div class="section-content">
+                <div class="citation-box">
+                    <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+                    <pre class="bibtex-code" id="bibtex">@inproceedings{
+  strgar2026accelerated,
+  title={Accelerated co-design of robots through morphological pretraining},
+  author={Strgar, Luke and Kriegman, Sam},
+  booktitle={Proceedings of the International Conference on Learning Representations (ICLR)},
+  year={2026},
+  url={https://openreview.net/forum?id=WVliGyFwZv}
+}</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function copyBibtex() {
+            const bibtexText = document.getElementById('bibtex').textContent;
+            navigator.clipboard.writeText(bibtexText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Remove focus from buttons immediately on touch devices
+        document.querySelectorAll('.btn, .copy-btn').forEach(button => {
+            // Handle touch events
+            button.addEventListener('touchend', function(e) {
+                this.blur();
+            });
+            
+            // Handle click events
+            button.addEventListener('click', function(e) {
+                this.blur();
+            });
+            
+            // Prevent focus on mousedown
+            button.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+            });
+        });
+
+        // Smooth scroll for citation link
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
