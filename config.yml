@@ -1,0 +1,72 @@
+# pretraining
+n_pretrain_robots: 1433600 # 1400 batches of 1024 ~= 1.5M robots
+pretrain_batch_size: 1024
+pretrain_target_radii: [0.4, 2.0]
+pretrain_save_interval: 100
+
+# model
+n_sin_waves: 5
+hidden_dims: [256, 256, 256]
+network_init_gain: 1.0
+
+# optimizer
+init_lr: 0.003
+beta1: 0.9
+beta2: 0.999
+weight_decay: 5.0e-03
+grad_norm_clip: 1.0
+
+# scheduler
+cycle_0: 10
+cycle_mult: 2
+lr_decay: 0.65
+min_lr: 0.00001
+
+# evolution
+evo_pop_size: 1024
+mutate_frac: 0.25
+eval_per_gen: 10
+eval_target_radii: [0.4, 2.0]
+
+# zero-shot evolution specific
+zeroshot_max_iters: 100
+
+# few-shot evolution specific
+train_per_gen: 30
+fewshot_max_iters: 20
+ft_init_lr: 3.5e-4
+ft_min_lr: 3.5e-5
+ft_cycle: 100
+
+# baseline specific
+baseline_train_per_gen: 1
+baseline_max_iters: 180
+
+# robot
+workspace_dims: [6, 6, 4]
+side_length: 0.1
+p_min: 0.1
+p_max: 0.6
+p_mu: 0.35
+p_sigma: 0.125
+
+# Terrain
+grid_dim: 8
+grid_max: 5.0
+center_point: [2.5, 2.5]
+terrain_zmin: 0.05
+terrain_mu: 0.0
+terrain_sigma_range: [0.0, 0.1]
+
+# Simulation
+needs_grad: True
+steps: 1000
+dt: 0.004
+eps: 1.0e-08
+toi_iter: 8
+gn_delta: 1.0e-03
+spring_omega: 10
+friction: 0.9
+spring_a: 0.2
+spring_k: 15000
+drag_damping: 15.0
