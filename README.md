@@ -6,6 +6,12 @@
 
 #### ***Proceedings of The International Conference on Learning Representations (ICLR)***, 2026
 
+</div>
+
+<img width="7388" height="4200" alt="RobotTeaser" src="https://github.com/user-attachments/assets/f70ec71f-3c9b-4d93-a499-d1fd32e6180c" />
+
+<div align="center">
+    
 ### :star: [Project Page](https://lukestrgar.com/codesign-mpt-project-page/)    :star: [OpenReview](https://openreview.net/forum?id=WVliGyFwZv)     :star: [Citation](https://github.com/lstrgar/codesign-mpt/blob/main/README.md#citation)
 
 </div>
