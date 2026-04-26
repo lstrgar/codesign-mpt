@@ -2,9 +2,9 @@
 
 # Accelerated co-design of robots </br> through morphological pretraining
 
-#### Luke Strgar & Sam Kriegman
+## Luke Strgar & Sam Kriegman
 
-#### ***Proceedings of The International Conference on Learning Representations (ICLR)***, 2026
+### Proceedings of ***The International Conference on Learning Representations (ICLR)***, 2026
 
 </div>
 
