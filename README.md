@@ -1,6 +1,6 @@
 <div align="center">
 
-# Accelerated co-design of robots through morphological pretraining
+## Accelerated co-design of robots through morphological pretraining
 
 #### Luke Strgar & Sam Kriegman
 
